@@ -47,8 +47,11 @@
    도안 페이지 앞에 이 페이지를 하나 끼운 것이다. */
 const TARGET = 'https://claude.ai/artifact/BrFxyHkcSjmDDf5BYggWn6';
 
-function plan(ua){
-  const enc = encodeURIComponent(TARGET);
+/* 앱 안 브라우저에는 도안 주소(claude.ai)가 아니라 '이 페이지 자신의 주소'를 넘긴다.
+   claude.ai 주소를 바로 넘기면 iPhone이 Claude 앱이 깔린 폰에서는 그 링크를 앱으로 열어버린다.
+   Safari에서 이 페이지가 열린 뒤 자동으로 도안 페이지로 넘어가게 하면 앱이 끼어들 가능성이 낮다. */
+function plan(ua, selfUrl){
+  const enc = encodeURIComponent(selfUrl);
   if(/Instagram/i.test(ua)) return {
     app: 'instagram', href: `instagram://extbrowser/?url=${enc}`,
     help: '자동으로 열리지 않았어요. 화면 오른쪽 위의 ⋯ 를 누르고 ‘외부 브라우저에서 열기’를 선택해 주세요.'};
@@ -61,7 +64,7 @@ function plan(ua){
 }
 const navigate = href => { location.href = href; };
 
-const p = plan(navigator.userAgent || '');
+const p = plan(navigator.userAgent || '', location.origin + location.pathname);
 document.getElementById('go').href = TARGET;
 if(!p.app){
   location.replace(TARGET);
