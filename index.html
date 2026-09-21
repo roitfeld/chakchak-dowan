@@ -5,82 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
 <title>추석창문꾸미기 도안</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Jua&display=swap">
-<style>
-  :root{
-    --bg:#EEF2EE; --ink:#1D2822; --muted:#5F6E66; --accent:#2F6B52; --accent-ink:#FFFFFF;
-    --note-bg:#FFF5D9; --note-line:#E6D08E;
-    --display:'Jua','Gowun Dodum','Apple SD Gothic Neo','Malgun Gothic',sans-serif;
-    --body:'Gowun Dodum','Apple SD Gothic Neo','Malgun Gothic',sans-serif;
-  }
-  @media (prefers-color-scheme: dark){
-    :root{ --bg:#141B17; --ink:#E7EEE9; --muted:#93A399; --accent:#5FB08D; --accent-ink:#0F1A14; --note-bg:#2B2716; --note-line:#5C5024; }
-  }
-  *{box-sizing:border-box;}
-  html,body{margin:0; background:var(--bg); color:var(--ink); font-family:var(--body); font-size:15px; line-height:1.6;}
-  main{max-width:520px; margin-inline:auto; padding:56px 20px;}
-  .greeting{font-family:var(--display); font-size:19px; color:var(--accent); margin:0 0 6px;}
-  h1{font-family:var(--display); font-weight:400; font-size:36px; line-height:1.15; margin:0 0 14px;}
-  p{margin:0 0 14px;}
-  .muted{color:var(--muted);}
-  .note{padding:12px 14px; background:var(--note-bg); border:1px solid var(--note-line); border-radius:8px;}
-  .btn{display:inline-flex; align-items:center; min-height:44px; padding:0 20px; border-radius:8px; background:var(--accent); color:var(--accent-ink); font-size:16px; text-decoration:none;}
-  [hidden]{display:none !important;}
-</style>
+<meta http-equiv="refresh" content="0; url=https://claude.ai/artifact/BrFxyHkcSjmDDf5BYggWn6">
 </head>
 <body>
-<main>
-  <p class="greeting">🙋🏻‍♀️ 착착홈에서 보내드려요</p>
-  <h1>추석창문꾸미기 도안</h1>
-  <p class="muted" id="msg">도안 페이지로 이동하고 있어요…</p>
-  <div id="fallback" hidden>
-    <p class="note" id="fb-text"></p>
-    <a class="btn" id="go" href="#">이 화면에서 계속 보기</a>
-    <p class="muted" style="margin-top:12px; font-size:13px;">이 화면에서는 도안 저장이 안 될 수 있어요.</p>
-  </div>
-</main>
-<script>
-/* 앱 안 브라우저(인스타·카카오톡)에서 열렸으면 바깥 브라우저(Safari/Chrome)로 넘기고,
-   그 밖의 환경에서는 곧바로 도안 페이지로 보낸다. 바깥 브라우저로 넘기는 건 최상위 페이지에서만 되기 때문에
-   도안 페이지 앞에 이 페이지를 하나 끼운 것이다. */
-const TARGET = 'https://claude.ai/artifact/BrFxyHkcSjmDDf5BYggWn6';
-
-/* 앱 안 브라우저에는 도안 주소(claude.ai)가 아니라 '이 페이지 자신의 주소'를 넘긴다.
-   claude.ai 주소를 바로 넘기면 iPhone이 Claude 앱이 깔린 폰에서는 그 링크를 앱으로 열어버린다.
-   Safari에서 이 페이지가 열린 뒤 자동으로 도안 페이지로 넘어가게 하면 앱이 끼어들 가능성이 낮다. */
-function plan(ua, selfUrl){
-  const enc = encodeURIComponent(selfUrl);
-  if(/Instagram/i.test(ua)) return {
-    app: 'instagram', href: `instagram://extbrowser/?url=${enc}`,
-    help: '자동으로 열리지 않았어요. 화면 오른쪽 위의 ⋯ 를 누르고 ‘외부 브라우저에서 열기’를 선택해 주세요.'};
-  if(/KAKAOTALK/i.test(ua)) return {
-    app: 'kakao', href: `kakaotalk://web/openExternal?url=${enc}`,
-    help: /iPhone|iPad|iPod/i.test(ua)
-      ? '자동으로 열리지 않았어요. 화면 오른쪽 아래의 공유 버튼을 누르고 ‘Safari에서 열기’를 선택해 주세요.'
-      : '자동으로 열리지 않았어요. 화면 오른쪽 위의 ⋮ 메뉴에서 ‘다른 브라우저로 열기’를 눌러 주세요.'};
-  return {app: null, href: TARGET};
-}
-const navigate = href => { location.href = href; };
-
-const p = plan(navigator.userAgent || '', location.origin + location.pathname);
-document.getElementById('go').href = TARGET;
-if(!p.app){
-  location.replace(TARGET);
-}else{
-  let left = false;
-  document.addEventListener('visibilitychange', () => { if(document.hidden) left = true; });
-  window.addEventListener('pagehide', () => { left = true; });
-  navigate(p.href);
-  // 바깥 브라우저가 열렸으면 이 화면은 뒤로 가 있다. 2초 뒤에도 그대로 보이면 자동 이동이 막힌 것이니 직접 하는 방법을 알려준다.
-  setTimeout(() => {
-    if(left) return;
-    document.getElementById('msg').hidden = true;
-    document.getElementById('fb-text').textContent = p.help;
-    document.getElementById('fallback').hidden = false;
-  }, 2000);
-}
-</script>
+<p><a href="https://claude.ai/artifact/BrFxyHkcSjmDDf5BYggWn6">추석창문꾸미기 도안 열기</a></p>
+<script>location.replace('https://claude.ai/artifact/BrFxyHkcSjmDDf5BYggWn6');</script>
 </body>
 </html>
