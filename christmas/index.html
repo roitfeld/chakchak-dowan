@@ -246,13 +246,52 @@ footer{text-align:center;color:var(--muted);font-size:13px;padding:0 0 32px}
 
   if (inApp) {
     $("hint").classList.add("on");
-    $("allBox").hidden = true;
+    if (!shareFirst) $("allBox").hidden = true;
     $("dl").textContent = "⬇ 저장하기";
     if (isAndroid) {
       const ext = $("openExt"); ext.hidden = false;
       ext.onclick = () => {
         const u = location.href.replace(/^https?:\/\//, "");
         location.href = `intent://${u}#Intent;scheme=https;package=com.android.chrome;end`;
+      };
+    }
+  }
+
+  if (shareFirst) {
+    if (!navigator.canShare) { $("allBox").hidden = true; }
+    else {
+      $("allBox").innerHTML = '<button class="btn ghost" id="allBtn" type="button">⬇ 전체 받기 (8장)</button><p class="hint on" id="allHint">사진첩에 8장을 한 번에 저장할 수 있어요.</p>';
+      const allBtn = $("allBtn");
+      let files = null, busy = false;
+      allBtn.onclick = async () => {
+        if (busy) return;
+        if (!files) {
+          busy = true; allBtn.disabled = true;
+          let n = 0;
+          allBtn.textContent = `준비 중 0/${items.length}`;
+          try {
+            const list = await Promise.all(items.map(it => getBlob(it).then(b => {
+              done[it.id] = b; n++;
+              allBtn.textContent = `준비 중 ${n}/${items.length}`;
+              return new File([b], it.filename, {type:"image/jpeg"});
+            })));
+            if (!navigator.canShare({files:list})) throw new Error("canShare");
+            files = list;
+            allBtn.textContent = `⬇ ${items.length}장 모두 저장하기`;
+            allBtn.classList.remove("ghost");
+            $("allHint").textContent = "버튼을 누른 뒤 ‘이미지 저장’을 선택하세요.";
+          } catch (err) {
+            $("allBox").hidden = true;
+            toast("한 번에 받기가 안 돼요. 한 장씩 저장해 주세요");
+          } finally {
+            busy = false; allBtn.disabled = false;
+          }
+          return;
+        }
+        try { await navigator.share({files}); }
+        catch (err) {
+          if (!err || err.name !== "AbortError") toast("한 번에 저장이 안 돼요. 한 장씩 저장해 주세요");
+        }
       };
     }
   }
