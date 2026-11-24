@@ -45,7 +45,8 @@ header p{margin:8px 0 0;opacity:.85;font-size:15px}
 .frame img.loading{opacity:.35}
 .nav{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;border:0;background:rgba(255,255,255,.9);color:var(--pine);font-size:22px;cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,.2)}
 .nav.prev{left:8px}.nav.next{right:8px}
-.meta{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 4px 4px;flex-wrap:wrap}
+.meta{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 4px 4px}
+.meta .btn{flex:none;min-height:44px;padding:0 16px;font-size:15px}
 .meta h2{margin:0;font:700 20px/1.2 "Gowun Dodum",sans-serif;color:var(--pine)}
 .meta small{display:block;color:var(--muted);font-size:13px}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:48px;padding:0 20px;border-radius:999px;border:0;background:var(--red);color:#fff;font:inherit;font-weight:700;font-size:16px;text-decoration:none;cursor:pointer;white-space:nowrap}
@@ -66,7 +67,7 @@ footer{text-align:center;color:var(--muted);font-size:13px;padding:0 0 32px}
 .sheet p b{color:#ffd54f}
 .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 16px;border-radius:999px;font-size:14px;opacity:0;pointer-events:none;transition:opacity .25s;z-index:20}
 .toast.on{opacity:1}
-@media(max-width:380px){.thumbs{gap:6px}.meta .btn{width:100%}}
+@media(max-width:380px){.thumbs{gap:6px}.meta h2{font-size:18px}}
 @media(min-width:640px){.thumbs{grid-template-columns:repeat(8,minmax(0,1fr))}.stage{padding:16px}}
 @media(prefers-reduced-motion:reduce){.frame img{transition:none}}
 </style>
@@ -246,7 +247,7 @@ footer{text-align:center;color:var(--muted);font-size:13px;padding:0 0 32px}
   if (inApp) {
     $("hint").classList.add("on");
     $("allBox").hidden = true;
-    $("dl").textContent = "⬇ 고화질로 저장하기";
+    $("dl").textContent = "⬇ 저장하기";
     if (isAndroid) {
       const ext = $("openExt"); ext.hidden = false;
       ext.onclick = () => {
