@@ -100,7 +100,7 @@ footer{text-align:center;color:var(--muted);font-size:13px;padding:0 0 32px}
       <div><h2 id="name"></h2><small id="count"></small></div>
       <button class="btn" id="dl" type="button">⬇ 고화질 다운로드</button>
     </div>
-    <p class="hint" id="hint">저장이 안 되면 위 이미지를 길게 눌러 ‘사진에 저장’을 선택하세요.</p>
+    <p class="hint" id="hint">저장 버튼을 누른 뒤 ‘이미지 저장’을 선택하세요. 안 되면 위 이미지를 길게 눌러 저장할 수 있어요.</p>
   </section>
 
   <div class="all" id="allBox">
@@ -163,6 +163,7 @@ footer{text-align:center;color:var(--muted);font-size:13px;padding:0 0 32px}
     $("count").textContent = `${cur+1} / ${items.length}`;
     document.querySelectorAll("#thumbs button").forEach((b,j)=>b.setAttribute("aria-current", j===cur ? "true" : "false"));
     const nx = new Image(); nx.src = items[(cur+1)%items.length].view;
+    prefetch(it);
     if (scroll) $("stage").scrollIntoView({behavior:"smooth", block:"start"});
   }
 
@@ -199,20 +200,35 @@ footer{text-align:center;color:var(--muted);font-size:13px;padding:0 0 32px}
   $("sheetClose").onclick = closeSheet;
   $("sheet").addEventListener("click", e=>{ if (e.target.id === "sheet") closeSheet(); });
 
+  const blobs = {};
+  function getBlob(it){
+    if (!blobs[it.id]) blobs[it.id] = fetch(it.file).then(r=>{ if(!r.ok) throw new Error("fetch"); return r.blob(); }).catch(e=>{ delete blobs[it.id]; throw e; });
+    return blobs[it.id];
+  }
+  const shareFirst = (isIOS || inApp) && !!navigator.share;
+  const done = {};
+  function prefetch(it){ if (shareFirst) getBlob(it).then(b=>{ done[it.id] = b; }, ()=>{}); }
+
+  async function share(it, blob){
+    const file = new File([blob], it.filename, {type:"image/jpeg"});
+    if (!(navigator.canShare && navigator.canShare({files:[file]}))) return false;
+    try { await navigator.share({files:[file]}); }
+    catch(err){ if (!err || err.name !== "AbortError") return false; }
+    return true;
+  }
+
   async function download(){
     const it = items[cur], btn = $("dl");
-    if (inApp) { openSheet(it); return; }
+    if (shareFirst && done[it.id]) {
+      if (!(await share(it, done[it.id]))) openSheet(it);
+      return;
+    }
+    if (inApp && !shareFirst) { openSheet(it); return; }
     btn.disabled = true; const label = btn.textContent; btn.textContent = "준비 중…";
     try {
-      const res = await fetch(it.file);
-      if (!res.ok) throw new Error("fetch");
-      const blob = await res.blob();
-      const file = new File([blob], it.filename, {type:"image/jpeg"});
-      if (isIOS && navigator.canShare && navigator.canShare({files:[file]})) {
-        try { await navigator.share({files:[file]}); }
-        catch(err){ if (err && err.name !== "AbortError") throw err; }
-        return;
-      }
+      const blob = await getBlob(it);
+      done[it.id] = blob;
+      if (shareFirst) { if (!(await share(it, blob))) openSheet(it); return; }
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url; a.download = it.filename;
