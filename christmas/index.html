@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>크리스마스 드로잉 도안</title>
+<meta name="description" content="프린트해서 따라 그리는 크리스마스 드로잉 도안 모음">
+<meta property="og:title" content="크리스마스 드로잉 도안 다운로드">
+<meta property="og:description" content="프린트해서 도안으로 써보세요 🎄">
+<meta property="og:image" content="https://roitfeld.github.io/chakchak-dowan/christmas/img/view/01.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@700&family=Gowun+Dodum&display=swap" rel="stylesheet">
+<style>
+/*
+VOICE: 다정하고 손맛 있는, 선물 꾸러미 같은 톤
+IDEA: 크리스마스 도안 묶음 — 썸네일 필름 위에 한 장씩 꺼내 보는 종이
+PICTURE: 선택한 도안이 흰 종이처럼 크게 놓인 무대
+COLOUR: 종이 흰색, 깊은 소나무 초록, 포인트 빨강
+LAYOUT: 제목 → 썸네일 그리드 → 큰 미리보기 + 다운로드 → 안내
+*/
+:root{--bg:#f6f3ec;--paper:#fff;--ink:#1f2a24;--pine:#1f4d3a;--red:#c8312b;--muted:#6b746e;--line:#e3ddd0}
+*{box-sizing:border-box;min-width:0}
+html{-webkit-text-size-adjust:100%}
+[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 "Gowun Dodum",-apple-system,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;overflow-x:hidden}
+.wrap{max-width:760px;margin:0 auto;padding:0 16px}
+header{background:var(--pine);color:#fff;padding:28px 0 22px;text-align:center}
+header h1{font:700 clamp(32px,8vw,46px)/1.05 "Gaegu",cursive;margin:0}
+header h1 .r{color:#ff8a80}
+header p{margin:8px 0 0;opacity:.85;font-size:15px}
+.notice{display:none;background:#fff4d6;border-bottom:1px solid #ecd9a0;font-size:14px;padding:12px 0}
+.notice.on{display:block}
+.notice b{color:var(--red)}
+.notice button{margin-top:8px}
+.thumbs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;padding:16px 0 8px}
+.thumbs button{position:relative;padding:0;border:2px solid transparent;border-radius:10px;background:var(--paper);overflow:hidden;aspect-ratio:3/4;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.thumbs button img{width:100%;height:100%;object-fit:cover;display:block}
+.thumbs button span{position:absolute;left:4px;top:4px;background:rgba(31,77,58,.85);color:#fff;font-size:11px;line-height:1;padding:4px 6px;border-radius:6px}
+.thumbs button[aria-current=true]{border-color:var(--red);box-shadow:0 0 0 2px rgba(200,49,43,.25)}
+.thumbs button:focus-visible{outline:3px solid var(--pine);outline-offset:2px}
+.stage{background:var(--paper);border-radius:16px;padding:12px;margin:8px 0 16px;box-shadow:0 2px 10px rgba(0,0,0,.07);scroll-margin-top:8px}
+.frame{position:relative;background:#faf9f6;border-radius:10px;overflow:hidden;aspect-ratio:3/4;touch-action:pan-y;max-height:66vh;margin:0 auto}
+.frame img{width:100%;height:100%;object-fit:contain;display:block;-webkit-touch-callout:default;transition:opacity .2s}
+.frame img.loading{opacity:.35}
+.nav{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;border:0;background:rgba(255,255,255,.9);color:var(--pine);font-size:22px;cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,.2)}
+.nav.prev{left:8px}.nav.next{right:8px}
+.meta{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 4px 4px;flex-wrap:wrap}
+.meta h2{margin:0;font:700 20px/1.2 "Gowun Dodum",sans-serif;color:var(--pine)}
+.meta small{display:block;color:var(--muted);font-size:13px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:48px;padding:0 20px;border-radius:999px;border:0;background:var(--red);color:#fff;font:inherit;font-weight:700;font-size:16px;text-decoration:none;cursor:pointer;white-space:nowrap}
+.btn:active{transform:scale(.97)}
+.btn.ghost{background:transparent;color:var(--pine);border:2px solid var(--pine)}
+.btn:focus-visible{outline:3px solid var(--pine);outline-offset:2px}
+.hint{font-size:13px;color:var(--muted);margin:8px 4px 0;display:none}
+.hint.on{display:block}
+.all{text-align:center;margin:8px 0 20px}
+.tips{background:var(--paper);border-radius:16px;padding:16px 18px;margin-bottom:28px;font-size:15px}
+.tips h3{margin:0 0 6px;font:700 18px/1.2 "Gowun Dodum",sans-serif;color:var(--pine)}
+.tips ul{margin:0;padding-left:18px}
+footer{text-align:center;color:var(--muted);font-size:13px;padding:0 0 32px}
+.sheet{position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;flex-direction:column;align-items:center;justify-content:center;z-index:10;padding:16px;color:#fff;text-align:center}
+.sheet.on{display:flex}
+.sheet img{max-width:100%;max-height:72vh;border-radius:8px;background:#fff;-webkit-touch-callout:default}
+.sheet p{margin:12px 0;font-size:16px}
+.sheet p b{color:#ffd54f}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 16px;border-radius:999px;font-size:14px;opacity:0;pointer-events:none;transition:opacity .25s;z-index:20}
+.toast.on{opacity:1}
+@media(max-width:380px){.thumbs{gap:6px}.meta .btn{width:100%}}
+@media(min-width:640px){.thumbs{grid-template-columns:repeat(8,minmax(0,1fr))}.stage{padding:16px}}
+@media(prefers-reduced-motion:reduce){.frame img{transition:none}}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <h1>Christmas <span class="r">Drawing</span> 도안</h1>
+    <p>🙋🏻‍♀️ 착착홈에서 보내드려요!</p>
+  </div>
+</header>
+
+<div class="notice" id="notice">
+  <div class="wrap">
+    인스타그램 앱에서는 버튼으로 바로 저장이 안 될 수 있어요.<br>
+    <b>이미지를 길게 눌러 저장</b>하거나, 오른쪽 위 <b>⋯ 메뉴 → 외부 브라우저로 열기</b>를 눌러주세요.
+    <div><button class="btn ghost" id="openExt" type="button" hidden>크롬으로 열기</button></div>
+  </div>
+</div>
+
+<main class="wrap">
+  <nav class="thumbs" id="thumbs" aria-label="도안 미리보기"></nav>
+
+  <section class="stage" id="stage" aria-live="polite">
+    <div class="frame" id="frame">
+      <img id="big" alt="">
+      <button class="nav prev" id="prev" type="button" aria-label="이전 도안">‹</button>
+      <button class="nav next" id="next" type="button" aria-label="다음 도안">›</button>
+    </div>
+    <div class="meta">
+      <div><h2 id="name"></h2><small id="count"></small></div>
+      <button class="btn" id="dl" type="button">⬇ 고화질 다운로드</button>
+    </div>
+    <p class="hint" id="hint">저장이 안 되면 위 이미지를 길게 눌러 ‘사진에 저장’을 선택하세요.</p>
+  </section>
+
+  <div class="all" id="allBox">
+    <a class="btn ghost" href="christmas-drawing-all.zip" download>전체 한 번에 받기 (ZIP)</a>
+  </div>
+
+  <section class="tips">
+    <h3>프린트 팁</h3>
+    <ul>
+      <li>A4 용지에 맞는 고화질(약 300dpi)로 저장돼요.</li>
+      <li>인쇄할 때 ‘용지에 맞추기’를 선택하면 잘리지 않아요.</li>
+    </ul>
+  </section>
+</main>
+
+<footer>즐거운 크리스마스 보내세요 🎄</footer>
+
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-label="이미지 저장">
+  <img id="sheetImg" alt="">
+  <p><b>이미지를 길게 눌러</b> ‘사진에 저장’ 또는<br>‘이미지 다운로드’를 선택하세요</p>
+  <button class="btn" id="sheetClose" type="button">닫기</button>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+{
+  const items = [
+    {name:"큰 트리"},
+    {name:"집"},
+    {name:"오나먼트"},
+    {name:"오나먼트&눈꽃"},
+    {name:"작은 트리"},
+    {name:"레터링"},
+    {name:"작은트리+ 레터링"},
+    {name:"산타"}
+  ].map((it,i)=>{
+    const id = String(i+1).padStart(2,"0");
+    return {...it, id, thumb:`img/thumb/${id}.jpg`, view:`img/view/${id}.jpg`, file:`img/print/christmas-drawing-${id}.jpg`, filename:`christmas-drawing-${id}.jpg`};
+  });
+
+  const $ = s => document.getElementById(s);
+  const ua = navigator.userAgent || "";
+  const inApp = /Instagram|FBAN|FBAV|FB_IAB|KAKAOTALK|NAVER|Line\//i.test(ua);
+  const isAndroid = /Android/i.test(ua);
+  const isIOS = /iPhone|iPad|iPod/i.test(ua) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+  let cur = 0;
+
+  $("thumbs").innerHTML = items.map((it,i)=>
+    `<button type="button" data-i="${i}" aria-label="${i+1}번 ${it.name}"><img src="${it.thumb}" alt="" loading="${i<8?'eager':'lazy'}"><span>${i+1}</span></button>`
+  ).join("");
+
+  function show(i, scroll){
+    cur = (i + items.length) % items.length;
+    const it = items[cur], big = $("big");
+    big.classList.add("loading");
+    big.onload = () => big.classList.remove("loading");
+    big.src = it.view;
+    big.alt = it.name + " 도안";
+    $("name").textContent = it.name;
+    $("count").textContent = `${cur+1} / ${items.length}`;
+    document.querySelectorAll("#thumbs button").forEach((b,j)=>b.setAttribute("aria-current", j===cur ? "true" : "false"));
+    const nx = new Image(); nx.src = items[(cur+1)%items.length].view;
+    if (scroll) $("stage").scrollIntoView({behavior:"smooth", block:"start"});
+  }
+
+  $("thumbs").addEventListener("click", e=>{
+    const b = e.target.closest("button"); if (b) show(+b.dataset.i, true);
+  });
+  $("prev").onclick = () => show(cur-1);
+  $("next").onclick = () => show(cur+1);
+  document.addEventListener("keydown", e=>{
+    if (e.key === "ArrowLeft") show(cur-1);
+    if (e.key === "ArrowRight") show(cur+1);
+    if (e.key === "Escape") closeSheet();
+  });
+
+  let sx = null, sy = null;
+  $("frame").addEventListener("touchstart", e=>{ sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, {passive:true});
+  $("frame").addEventListener("touchend", e=>{
+    if (sx === null) return;
+    const dx = e.changedTouches[0].clientX - sx, dy = e.changedTouches[0].clientY - sy;
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) show(cur + (dx < 0 ? 1 : -1));
+    sx = null;
+  });
+
+  function toast(msg){
+    const t = $("toast"); t.textContent = msg; t.classList.add("on");
+    clearTimeout(toast.t); toast.t = setTimeout(()=>t.classList.remove("on"), 2200);
+  }
+  function openSheet(it){
+    $("sheetImg").src = it.file;
+    $("sheetImg").alt = it.name;
+    $("sheet").classList.add("on");
+  }
+  function closeSheet(){ $("sheet").classList.remove("on"); }
+  $("sheetClose").onclick = closeSheet;
+  $("sheet").addEventListener("click", e=>{ if (e.target.id === "sheet") closeSheet(); });
+
+  async function download(){
+    const it = items[cur], btn = $("dl");
+    if (inApp) { openSheet(it); return; }
+    btn.disabled = true; const label = btn.textContent; btn.textContent = "준비 중…";
+    try {
+      const res = await fetch(it.file);
+      if (!res.ok) throw new Error("fetch");
+      const blob = await res.blob();
+      const file = new File([blob], it.filename, {type:"image/jpeg"});
+      if (isIOS && navigator.canShare && navigator.canShare({files:[file]})) {
+        try { await navigator.share({files:[file]}); }
+        catch(err){ if (err && err.name !== "AbortError") throw err; }
+        return;
+      }
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url; a.download = it.filename;
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(()=>URL.revokeObjectURL(url), 4000);
+      toast("다운로드를 시작했어요");
+    } catch(err) {
+      openSheet(it);
+    } finally {
+      btn.disabled = false; btn.textContent = label;
+    }
+  }
+  $("dl").onclick = download;
+
+  if (inApp) {
+    $("notice").classList.add("on");
+    $("hint").classList.add("on");
+    $("allBox").hidden = true;
+    $("dl").textContent = "⬇ 고화질로 저장하기";
+    if (isAndroid) {
+      const ext = $("openExt"); ext.hidden = false;
+      ext.onclick = () => {
+        const u = location.href.replace(/^https?:\/\//, "");
+        location.href = `intent://${u}#Intent;scheme=https;package=com.android.chrome;end`;
+      };
+    }
+  }
+
+  show(0);
+}
+</script>
+</body>
+</html>
